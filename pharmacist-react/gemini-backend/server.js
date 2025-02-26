@@ -117,18 +117,22 @@ app.post("/process-prescription", upload.array("images"), async (req, res) => {
 
     const formatOrder = (order) => {
       if (order.length === 0) return "**No available medicines.**";
-
-      let orderText = "**Generated Order:**\n";
+    
+      let orderText = "**Generated Order:**\n\n";
+      orderText += "| # | Medicine | Dosage | Frequency | Quantity | Price |\n";
+      orderText += "|---|----------|--------|-----------|----------|-------|\n";
+    
       let total = 0;
-
+    
       order.forEach((item, index) => {
-        orderText += `${index + 1}. ${item.name} - ${item.dosage} (${item.frequency}) x ${item.quantity} = $${item.total}\n`;
+        orderText += `| ${index + 1} | ${item.name} | ${item.dosage} | ${item.frequency} | ${item.quantity} | $${item.total.toFixed(2)} |\n`;
         total += item.total;
       });
-
+    
       orderText += `\n**Total Price: $${total.toFixed(2)}**\n`;
       return orderText;
     };
+    
 
     let response = formatOrder(order);
 
