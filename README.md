@@ -23,23 +23,3 @@ This project provides an **Express.js-based backend** for a **React web applicat
 
 ---
 
-## ** Flowchart**
-graph TD
-    A[User Uploads Prescription Image] -->|Image Sent via API| B[Express.js Backend]
-    B -->|File Uploaded with Multer| C[Stored in 'uploads/' Directory]
-    C -->|Image Sent to Gemini AI| D[Gemini AI Extracts Medicine Data]
-    
-    D -->|Response with Medicines Table| E[Parse Response]
-    E -->|Extract Medicines & Validate| F[Check Medicine Validity]
-    F -->|If Medicine is Valid| G[Check Database for Availability]
-    F -->|If Invalid| H[Mark as 'Invalid' and Skip]
-
-    G -->|If Available| I[Add to Order List]
-    G -->|If Unavailable| J[Add to Unavailable List]
-
-    I -->|Fetch Medicine Price| K[Calculate Order Total]
-    K -->|Generate Order Summary| L[Prepare Final Response]
-    
-    L -->|Send JSON Response to Frontend| M[React Frontend Displays Order]
-
-    J -->|Append to 'Unavailable Medicines' List| L
